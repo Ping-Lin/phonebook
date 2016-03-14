@@ -90,6 +90,7 @@ int main(int argc, char *argv[])
 
     printf("execution time of append() : %lf sec\n", cpu_time1);
     printf("execution time of findName() : %lf sec\n", cpu_time2);
+    printf("total time elapsed : %lf sec\n", cpu_time1 + cpu_time2);
 
     if (pHead->pNext) free(pHead->pNext);
     free(pHead);
