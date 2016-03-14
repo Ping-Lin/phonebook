@@ -1,5 +1,5 @@
 CC ?= gcc
-CFLAGS_common ?= -Wall -std=gnu99
+CFLAGS_common ?= -Wall -std=gnu99 #-DNDEBUG
 CFLAGS_orig = -O0
 CFLAGS_opt  = -O0
 
@@ -25,9 +25,11 @@ run: $(EXEC)
 cache-test: $(EXEC)
 	perf stat --repeat 100 \
 		-e cache-misses,cache-references,instructions,cycles \
+		-o cache_test.txt \
 		./phonebook_orig
 	perf stat --repeat 100 \
 		-e cache-misses,cache-references,instructions,cycles \
+		-o cache_test.txt --append \
 		./phonebook_opt
 
 output.txt: cache-test calculate
@@ -42,4 +44,4 @@ calculate: calculate.c
 .PHONY: clean
 clean:
 	$(RM) $(EXEC) *.o perf.* \
-	      	calculate orig.txt opt.txt output.txt runtime.png
+	      	calculate orig.txt opt.txt output.txt runtime.png cache_test.txt
